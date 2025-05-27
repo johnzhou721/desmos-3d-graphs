@@ -1,0 +1,451 @@
+settings @{
+  product: "graphing-3d",
+  randomSeed: "4bba6a31609011dcc62b36a25acefdf3",
+  viewport: @{
+    xmin: -1015.1284500000049,
+    xmax: 1015.1284500000049,
+    ymin: -1015.1284500000049,
+    ymax: 1015.1284500000049,
+    zmin: 0,
+    zmax: 2030.2569000000099,
+  },
+  axis3D: [0.18778726673868426, 0.9822097242868514, -1.1676150377670622e-13],
+  worldRotation3D: [-0.9391779497574874, -0.18778726673569515, -0.2875425553570483, 0.1795600835599023, -0.9822097242707071, 0.05497484824921144, -0.2927506705052731, -1.6714665433070325e-14, 0.9561888123789777],
+}
+
+folder "Documentation" {
+  "THIS IS NOT ACCURATE. STUFF MIGHT BE MISSING, PARTICULARLY ENGINES ETC.\n\nAlso, Desmos apparently does not know how to render..... stuff are just very low-res and rough especially when zoomed out."
+
+  "Lots of references are found on the internet."
+
+  "The time slider below only animates raising the rocket, NOT all the stages etc."
+}
+
+t_ime = 1500 @{ color: "#2d70b3", slider: @{ min: 0, max: 2000 } }
+
+folder "Space Shuttle: Launch" {
+  s_lide = t_ime / 3 @{ color: "#c74440" }
+
+  s = s_lide + 180 @{
+    color: "#c74440",
+    slider: @{ loopMode: "LOOP_FORWARD", min: 0, max: 1000 },
+  }
+
+  A = [0, 50, 100, 150, 200, 250] @{ color: "#6042a6" }
+
+  triangle((0, -70, A), (60, -70, A), (60, -130, A)) @{
+    color: M,
+    lines: @{ opacity: 0.9, width: 2.5 },
+    points: @{ size: 0 },
+  }
+
+  triangle((0, -70, A), (0, -130, A), (60, -130, A)) @{ color: M }
+
+  L = [0, 250] @{ color: "#c74440" }
+
+  triangle((0, -70, 250), (0, -70, 0), (0, -130, 0)) @{
+    color: W,
+    lines: @{ opacity: 0.9, width: 2.5 },
+    points: @{ size: 0 },
+  }
+
+  triangle((60, -70, 250), (60, -70, 0), (0, -70, 0)) @{
+    color: W,
+    lines: @{ opacity: 0.9, width: 2.5 },
+    points: @{ size: 0 },
+  }
+
+  triangle((0, -130, 250), (60, -130, 0), (0, -130, 0)) @{
+    color: W,
+    lines: @{ opacity: 0.9, width: 2.5 },
+    points: @{ size: 0 },
+  }
+
+  triangle((60, -130, 250), (60, -70, 0), (60, -130, 0)) @{ color: W }
+
+  x ^ 2 + (z - 170) ^ 2 = 5 ^ 2 * {s_lide = 0} * {-70 <= y <= -46} @{
+    color: B_l,
+  }
+
+  x ^ 2 + (y + 70) ^ 2 = 5 ^ 2 * {s_lide > 0} * {146 <= z <= 170} @{
+    color: B_l,
+  }
+
+  s_0 = -(s_lide / 5) @{
+    color: "#c74440",
+    hidden: true,
+    slider: @{ min: 0, max: 100 },
+  }
+}
+
+folder "Space Shuttle: Part 1" {
+  (x - s_0) ^ 2 + y ^ 2 =
+    ((z - 100 - sqrt(1311) - s) / 2) ^ 2 *
+      {s + 70 + sqrt(1311) >= z - 30 >= s + 70} @{ color: O }
+
+  ((x - s_0) / 15) ^ 2 + (y / 15) ^ 2 + ((z - 75 - s) / 30) ^ 2 =
+    (484 / 225) * {s + 100 >= z > s + 75} @{ color: O }
+
+  (x - s_0) ^ 2 + y ^ 2 = 484 * {s + -150 <= z < s + 75} @{ color: O }
+
+  (x - s_0) ^ 2 + y ^ 2 + (z + 150 - s) ^ 2 = 484 * {z < s - 150} @{ color: O }
+} @{ collapsed: true }
+
+folder "Space Shuttle: Part 2" {
+  z =
+    s + 30 - sqrt(4 * (x - s_0) ^ 2 + 4 * (y - 34) ^ 2) + 74 * {z >= s + 80} @{
+    color: W,
+  }
+
+  (x - s_0) ^ 2 + (y - 34) ^ 2 = 144 * {s - 150 <= z < s + 80} @{ color: W }
+
+  "Use square root domain to bypass double equation graphing, which is not supported by Desmos."
+
+  (x - s_0) ^ 2 + (y - 34) ^ 2 +
+    min(sqrt((x - s_0) ^ 2 + (y - 34) ^ 2 - 25), 0) <=
+    144 * {z = s - 150} @{ color: W }
+
+  z =
+    s - sqrt(4 * (x - s_0) ^ 2 + 4 * (y - 34) ^ 2) -
+      140 * {s - 165 <= z <= s - 150} @{ color: W }
+} @{ collapsed: true }
+
+folder "Space Shuttle: Part 3" {
+  z - s =
+    30 - sqrt(4 * (x - s_0) ^ 2 + 4 * (y + 34) ^ 2) + 74 * {z >= s + 80} @{
+    color: W,
+  }
+
+  (x - s_0) ^ 2 + (y + 34) ^ 2 = 144 * {s + -150 <= z < s + 80} @{ color: W }
+
+  (x - s_0) ^ 2 + (y + 34) ^ 2 +
+    min(sqrt((x - s_0) ^ 2 + (y + 34) ^ 2 - 25), 0) <=
+    144 * {z = s - 150} @{ color: W }
+
+  z =
+    s - sqrt(4 * (x - s_0) ^ 2 + 4 * (y + 34) ^ 2) -
+      140 * {-165 <= z - s <= -150} @{ color: W }
+} @{ collapsed: true }
+
+folder "Space Shuttle: Part 4" {
+  z <=
+    s - ((1 / 5) * y) ^ 2 + 50 +
+      min(0, sqrt(z - s) + sqrt(x - s_0 - 22) + sqrt(30 - (x - s_0))) @{
+    color: W_2,
+  }
+
+  z <=
+    0 + s +
+      min(
+        sqrt(z + 120 - s) + sqrt(x - s_0 - 22) + sqrt(30 - x + s_0) +
+          sqrt(y + 25 * sqrt(2)) +
+          sqrt(25 * sqrt(2) - y),
+        0
+      ) @{ color: W_2 }
+
+  z =
+    s - ((1 / 5) * y) ^ 2 + 50 - 2 * (x - s_0) + 60 + min(0, sqrt(z - s)) +
+      min(0, sqrt(x - s_0 - 22)) @{ color: W }
+
+  triangle(
+    (30 + s_0, 25 * sqrt(2), -130 + s),
+    (30 + s_0, 25 * sqrt(2) + 30, -130 + s),
+    (30 + s_0, 25 * sqrt(2), -40 + s)
+  ) @{ color: W }
+
+  triangle(
+    (30 + s_0, -25 * sqrt(2), -130 + s),
+    (30 + s_0, -25 * sqrt(2) - 30, -130 + s),
+    (30 + s_0, -25 * sqrt(2), -40 + s)
+  ) @{ color: W }
+
+  x - s_0 =
+    -((y ^ 2 - 2750) / 50) * {s - 130 <= z <= s} *
+      {-25 * sqrt(2) - 5 <= y <= 25 * sqrt(2) + 5} @{ color: W }
+
+  x - s_0 <=
+    -((y ^ 2 - 2750) / 50) +
+      min(
+        0,
+        sqrt(z + 130 - s) + sqrt(-125 - z + s) +
+          sqrt((x - s_0 - 37) ^ 2 + (y - 13) ^ 2 - 64) +
+          sqrt((x - s_0 - 37) ^ 2 + (y + 13) ^ 2 - 64)
+      ) *
+        {x - s_0 >= 22} *
+        {-25 * sqrt(2) - 5 <= y <= 25 * sqrt(2) + 5} @{ color: B }
+
+  (x - s_0 - 37) ^ 2 + (y + 13) ^ 2 =
+    ((z - s) / 4 + 24.5) ^ 2 * {s - 160 <= z <= s - 130} @{ color: B }
+
+  (x - s_0 - 37) ^ 2 + (y - 13) ^ 2 =
+    ((z - s) / 4 + 24.5) ^ 2 * {s - 160 <= z <= s - 130} @{ color: B }
+} @{ collapsed: true }
+
+folder "Saturn V: Launch" {
+  s_2 = -(300 / 1) @{ color: "#388c46", slider: @{ min: -300 } }
+
+  s_3 = t_ime / 3.5 @{ color: "#6042a6" }
+
+  z =
+    [0, 50, 100 ... 800] * {y < s_2 - 100} * {y > s_2 - 200} * {x > -50} *
+      {x < 50} @{ color: W }
+
+  (x + [-1, 1, 1, -1] * 50) ^ 2 + (y - s_2 + [100, 200, 100, 200]) ^ 2 =
+    15 ^ 2 * {0 < z < 800} @{ color: W }
+}
+
+folder "Saturn V: Part 1" {
+  L_1 = [0, pi / 3 ... 2 * pi] @{ color: "#c74440" }
+
+  L_2 = [pi / 3, 2 * (pi / 3) ... 2 * pi] @{ color: "#2d70b3" }
+
+  A_lt = [B, W, B, W, B, W, B] @{ color: "#c74440" }
+
+  C_rop(r_0, x_0, y_0, x, y) =
+    min(sqrt((x - x_0) ^ 2 + (y - y_0) ^ 2 - r_0 ^ 2), 0) @{ color: "#388c46" }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    40 ^ 2 * {35 < z - s_3 < 150} *
+      {
+        x + (x - 0) * cos(L_1) + (y - s_2) * sin(L_1) <
+        x <
+        x + (x - 0) * cos(L_2) + (y - s_2) * sin(L_2)
+      } @{ color: A_lt }
+
+  x ^ 2 + (y - s_2) ^ 2 = 40 ^ 2 * {150 <= z - s_3 < 300} @{ color: W }
+
+  x ^ 2 + (y - s_2) ^ 2 <=
+    40 ^ 2 + C_rop(-(25 / 4.2), 20, s_2 + 25, x, y) +
+      C_rop(-(25 / 4.2), 20, s_2 - 25, x, y) +
+      C_rop(-(25 / 4.2), -20, s_2 + 25, x, y) +
+      C_rop(-(25 / 4.2), -20, s_2 - 25, x, y) +
+      C_rop(-(25 / 4.2), 0, s_2, x, y) * {z - s_3 = 35} @{ color: B_l }
+
+  x ^ 2 + (y - s_2) ^ 2 = ((z - s_3 - 60) / 4.2) ^ 2 * {0 <= z - s_3 <= 35} @{
+    color: B,
+  }
+
+  (x - 20) ^ 2 + (y - s_2 - 25) ^ 2 =
+    ((z - s_3 - 60) / 4.2) ^ 2 * {0 <= z - s_3 <= 35} @{ color: B }
+
+  (x - 20) ^ 2 + (y - s_2 + 25) ^ 2 =
+    ((z - s_3 - 60) / 4.2) ^ 2 * {0 <= z - s_3 <= 35} @{ color: B }
+
+  (x + 20) ^ 2 + (y - s_2 + 25) ^ 2 =
+    ((z - s_3 - 60) / 4.2) ^ 2 * {0 <= z - s_3 <= 35} @{ color: B }
+
+  (x + 20) ^ 2 + (y - s_2 - 25) ^ 2 =
+    ((z - s_3 - 60) / 4.2) ^ 2 * {0 <= z - s_3 <= 35} @{ color: B }
+} @{ collapsed: true }
+
+folder "Saturn V: Part 2" {
+  x ^ 2 + (y - s_2) ^ 2 <=
+    40 ^ 2 + C_rop(-(25 / 6), 20, s_2 + 25, x, y) +
+      C_rop(-(25 / 6), 20, s_2 - 25, x, y) +
+      C_rop(-(25 / 6), -20, s_2 + 25, x, y) +
+      C_rop(-(25 / 6), -20, s_2 - 25, x, y) +
+      C_rop(-(25 / 6), 0, s_2, x, y) * {z - s_3 = 350} @{ color: B_l }
+
+  L_4 = [pi / 6, 2 * (pi / 6) ... 2 * pi] @{ color: "#2d70b3" }
+
+  L_3 = [0, pi / 6 ... 2 * pi] @{ color: "#388c46" }
+
+  A_lt1 = [W_2, W, W_2, W, W_2, W, W_2, W, W_2, W, W_2, W, W_2, W, W_2, W] @{
+    color: "#6042a6",
+  }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    40 ^ 2 * {300 < z - s_3 < 350} *
+      {
+        x + (x - 0) * cos(L_3) + (y - s_2) * sin(L_3) <
+        x <
+        x + (x - 0) * cos(L_4) + (y - s_2) * sin(L_4)
+      } @{ color: A_lt1 }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    ((z - s_3 - 375) / 4.2) ^ 2 * {350 - 25 <= z - s_3 <= 350} @{ color: B }
+
+  (x - 20) ^ 2 + (y - s_2 - 25) ^ 2 =
+    ((z - s_3 - 375) / 6) ^ 2 * {350 - 25 <= z - s_3 <= 350} @{ color: B }
+
+  (x + 20) ^ 2 + (y - s_2 - 25) ^ 2 =
+    ((z - s_3 - 375) / 6) ^ 2 * {350 - 25 <= z - s_3 <= 350} @{ color: B }
+
+  (x + 20) ^ 2 + (y - s_2 + 25) ^ 2 =
+    ((z - s_3 - 375) / 6) ^ 2 * {350 - 25 <= z - s_3 <= 350} @{ color: B }
+
+  (x - 20) ^ 2 + (y - s_2 + 25) ^ 2 =
+    ((z - s_3 - 375) / 6) ^ 2 * {350 - 25 <= z - s_3 <= 350} @{ color: B }
+
+  x ^ 2 + (y - s_2) ^ 2 = 40 ^ 2 * {350 < z - s_3 < 550} @{ color: M }
+} @{ collapsed: true }
+
+folder "Saturn V: Part 3" {
+  x ^ 2 + (y - s_2) ^ 2 <=
+    40 ^ 2 + C_rop(-10, 0, s_2, x, y) * {z - s_3 = 550} @{ color: B_l }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    ((z - s_3 - 580) / 2) ^ 2 * {550 - 25 <= z - s_3 <= 550} @{ color: B }
+
+  x ^ 2 + (y - s_2) ^ 2 = 40 ^ 2 * {550 <= z - s_3 <= 670} @{ color: M }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    ((z - s_3 - 670) / 4 - 40) ^ 2 * {670 < z - s_3 < 670 + 50} @{ color: W }
+
+  x ^ 2 + (y - s_2) ^ 2 = 28 ^ 2 * {720 < z - s_3 < 800} @{ color: W }
+} @{ collapsed: true }
+
+folder "Saturn V: Part 4" {
+  x ^ 2 + (y - s_2) ^ 2 =
+    ((z - s_3 - 800) / 4 - 28) ^ 2 * {800 < z - s_3 < 800 + 30} @{ color: W }
+
+  x ^ 2 + (y - s_2) ^ 2 <= 20 ^ 2 * {z - s_3 = 830} @{ color: W }
+
+  x ^ 2 + (y - s_2) ^ 2 = 10 ^ 2 * {850 <= z - s_3 <= 940} @{ color: W }
+
+  x ^ 2 + (y - s_2) ^ 2 <= 10 ^ 2 * {z - s_3 = 900} @{ color: W }
+
+  10 ^ 2 <= x ^ 2 + (y - s_2) ^ 2 <= (50 / 3 - 40) ^ 2 * {z - s_3 = 850} @{
+    color: M,
+  }
+
+  x ^ 2 + (y - s_2) ^ 2 =
+    ((z - s_3 - 800) / 3 - 40) ^ 2 * {800 < z - s_3 < 850} @{ color: M }
+} @{ collapsed: true }
+
+folder "Starship: Launch [INCOMPLETE]" {
+  t_st = (5 / 14) * t_ime @{
+    color: "#c74440",
+    slider: @{ reversed: true, max: 100 },
+  }
+
+  z = 50 * {O_f - 50 <= y < O_f + 50} * {-50 <= x <= 50} @{ color: C_ilg2 }
+
+  triangle((-50, O_f - 50, 50), (50, O_f - 50, 50), (50, O_f - 80, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((-50, O_f - 50, 50), (50, O_f - 80, 0), (-50, O_f - 80, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((-50, O_f - 50, 50), (-50, O_f + 50, 50), (-80, O_f + 50, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((50, O_f - 50, 50), (80, O_f + 50, 0), (80, O_f - 50, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((-50, O_f - 50, 50), (-80, O_f + 50, 0), (-80, O_f - 50, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((-50, O_f + 50, 50), (50, O_f + 80, 0), (-50, O_f + 80, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((-50, O_f + 50, 50), (50, O_f + 50, 50), (50, O_f + 80, 0)) @{
+    color: C_ilg2,
+  }
+
+  triangle((50, O_f - 50, 50), (50, O_f + 50, 50), (80, O_f + 50, 0)) @{
+    color: C_ilg2,
+  }
+} @{ collapsed: true }
+
+folder "Starship: Main" {
+  R_epeat(L, N) = (L[mod([0 ... N * l - 1], l) + 1] with l = count(L)) @{
+    color: "#2d70b3",
+  }
+
+  x ^ 2 + (y - O_f) ^ 2 <= 1500 * {z = 50 + t_st} @{ color: C_ilg }
+
+  O_f = 329 @{ color: "#2d70b3", slider: @{ max: 500 } }
+
+  N_step = R_epeat(join([S_ilg], S_il2g), ceil(850 / 20)) @{ color: "#388c46" }
+
+  T_xtstep = rgb(N_step, N_step, N_step) @{ color: "#c74440" }
+
+  x ^ 2 + (y - O_f) ^ 2 = 1500 * {Z_stlb + t_st <= z <= Z_strb + t_st} @{
+    color: T_xtstep,
+  }
+
+  x ^ 2 + (y - O_f) ^ 2 = 1800 * {0 <= z <= 1000} @{
+    color: "#aaaaaa",
+    hidden: true,
+  }
+
+  a_Zstlb(n) =
+    {mod(floor(n), 2) = 0: 20 * floor(n / 2) + 49, 20 * floor(n / 2) + 50} @{
+    color: "#c74440",
+  }
+
+  Z_stlb = (a_Zstlb(n) for n = [1 ... 86]) @{ color: "#fa7e19" }
+
+  Z_strb = (a_Zstlb(n + 1) for n = [1 ... 86]) @{ color: "#6042a6" }
+
+  x ^ 2 + (y - O_f) ^ 2 + (z - t_st - 900) ^ 2 / 5 = 1500 * {z + t_st >= 900} @{
+    color: C_ilg,
+  }
+
+  triangle(
+    (0, O_f - 10 * sqrt(15), 900 + t_st),
+    (0, O_f - 10 * sqrt(15) - 50, 910 + t_st),
+    (0, O_f, 900 + 50 * sqrt(3) + t_st)
+  ) @{ color: M }
+
+  triangle(
+    (0, O_f + 10 * sqrt(15), 900 + t_st),
+    (0, O_f + 10 * sqrt(15) + 50, 910 + t_st),
+    (0, O_f, 900 + 50 * sqrt(3) + t_st)
+  ) @{ color: M }
+
+  triangle(
+    (0, O_f - 10 * sqrt(15), 700 + t_st),
+    (0, O_f - 10 * sqrt(15), 550 + t_st),
+    (0, O_f - 10 * sqrt(15) - 50, 560 + t_st)
+  ) @{ color: C_ilg }
+
+  triangle(
+    (0, O_f - 10 * sqrt(15) - 50, 560 + t_st),
+    (0, O_f - 10 * sqrt(15), 700 + t_st),
+    (0, O_f - 10 * sqrt(15) - 50, 650 + t_st)
+  ) @{ color: C_ilg }
+
+  triangle(
+    (0, O_f + 10 * sqrt(15), 700 + t_st),
+    (0, O_f + 10 * sqrt(15), 550 + t_st),
+    (0, O_f + 10 * sqrt(15) + 50, 560 + t_st)
+  ) @{ color: C_ilg }
+
+  triangle(
+    (0, O_f + 10 * sqrt(15) + 50, 560 + t_st),
+    (0, O_f + 10 * sqrt(15), 700 + t_st),
+    (0, O_f + 10 * sqrt(15) + 50, 650 + t_st)
+  ) @{ color: C_ilg }
+}
+
+folder "Colors" {
+  O = rgb(255, 165, 0) @{ color: "#2d70b3" }
+
+  W = rgb(230, 230, 230) @{ color: "#388c46" }
+
+  W_2 = rgb(180, 180, 180) @{ color: "#388c46" }
+
+  B = rgb(70, 70, 70) @{ color: "#2d70b3" }
+
+  M = rgb(230, 230, 230) @{ color: "#2d70b3" }
+
+  B_l = rgb(0, 200, 255) @{ color: "#aaaaaa" }
+
+  B_1 = rgb(130, 130, 130) @{ color: "#6042a6" }
+
+  S_ilg = 220 @{ color: "#6042a6" }
+
+  S_il2g = 240 @{ color: "#aaaaaa" }
+
+  C_ilg = rgb(S_ilg, S_ilg, S_ilg) @{ color: "#388c46" }
+
+  C_ilg2 = rgb(180, 180, 180) @{ color: "#388c46" }
+} @{ collapsed: true }
