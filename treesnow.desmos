@@ -1,0 +1,153 @@
+settings @{
+  product: "graphing-3d",
+  randomSeed: "8716ac41c7abac5bfa9af17eacec877e",
+  viewport: @{
+    xmin: -1.476513858488793,
+    xmax: 1.476513858488793,
+    ymin: -1.4765138584885211,
+    ymax: 1.4765138584885211,
+    zmin: -1.4765138584890725,
+    zmax: 1.4765138584890725,
+  },
+  axis3D: [-0.9849311595155115, 0.17294684457062948, -1.2101167379838424e-13],
+  worldRotation3D: [-0.16474643326023306, 0.9849311594999915, -0.05262341469381001, -0.9382298702232285, -0.17294684456793363, -0.29969000579749533, -0.3042750784223699, 5.713311771621261e-16, 0.9525842097426689],
+}
+
+t = 0.72 @{
+  color: "#6042a6",
+  hidden: true,
+  slider: @{ loopMode: "PLAY_ONCE", period: 2000, min: 0.12, max: 1.4 },
+}
+
+B_rown = rgb(r_1, g_1, b_2) @{ color: "#2d70b3" }
+
+r_1 = 212 @{
+  color: "#2d70b3",
+  hidden: true,
+  slider: @{ min: 0, max: 255, step: 1 },
+}
+
+(5 * x) ^ 2 + (5 * y) ^ 2 <= 0.07 * {0 <= 5 * z <= 5} @{ color: B_rown }
+
+g_1 = 200 @{
+  color: "#388c46",
+  hidden: true,
+  slider: @{ min: 0, max: 255, step: 1 },
+}
+
+W_hite = rgb(255, 255, 255) @{ color: "#c74440" }
+
+b_2 = 164 @{
+  color: "#6042a6",
+  hidden: true,
+  slider: @{ min: 0, max: 255, step: 1 },
+}
+
+R_00(alpha, beta, gamma) = cos(beta) * cos(gamma) @{ color: "#aaaaaa" }
+
+R_01(alpha, beta, gamma) = -cos(beta) * sin(gamma) @{ color: "#c74440" }
+
+R_02(alpha, beta, gamma) = sin(beta) @{ color: "#2d70b3" }
+
+R_10(alpha, beta, gamma) =
+  sin(alpha) * sin(beta) * cos(gamma) + cos(alpha) * sin(gamma) @{
+  color: "#388c46",
+}
+
+R_11(alpha, beta, gamma) =
+  -sin(alpha) * sin(beta) * sin(gamma) + cos(alpha) * cos(gamma) @{
+  color: "#6042a6",
+}
+
+R_12(alpha, beta, gamma) = -sin(alpha) * cos(beta) @{ color: "#aaaaaa" }
+
+R_21(alpha, beta, gamma) =
+  cos(alpha) * sin(beta) * sin(gamma) + sin(alpha) * cos(gamma) @{
+  color: "#2d70b3",
+}
+
+R_20(alpha, beta, gamma) =
+  -cos(alpha) * sin(beta) * cos(gamma) + sin(alpha) * sin(gamma) @{
+  color: "#c74440",
+}
+
+R_22(alpha, beta, gamma) = cos(alpha) * cos(beta) @{ color: "#388c46" }
+
+R_x(x, y, z, alpha, beta, gamma) =
+  R_00(alpha, beta, gamma) * x + R_01(alpha, beta, gamma) * y +
+    R_02(alpha, beta, gamma) * z @{ color: "#2d70b3" }
+
+R_y(x, y, z, alpha, beta, gamma) =
+  R_10(alpha, beta, gamma) * x + R_11(alpha, beta, gamma) * y +
+    R_12(alpha, beta, gamma) * z @{ color: "#388c46" }
+
+R_z(x, y, z, alpha, beta, gamma) =
+  R_20(alpha, beta, gamma) * x + R_21(alpha, beta, gamma) * y +
+    R_22(alpha, beta, gamma) * z @{ color: "#6042a6" }
+
+R_x(5 * x, 5 * y, 5 * z - q, a, b, c) ^ 2 +
+  R_y(5 * x, 5 * y, 5 * z - q, a, b, c) ^ 2 <=
+  0.02 * {0 <= R_z(5 * x, 5 * y, 5 * z - q, a, b, c) <= 3} @{ color: B_rown }
+
+R_x(5 * x, 5 * y, 5 * z - p, a, b_1, c) ^ 2 +
+  R_y(5 * x, 5 * y, 5 * z - p, a, b_1, c) ^ 2 <=
+  0.02 * {0 <= R_z(5 * x, 5 * y, 5 * z - p, a, b_1, c) <= 3} @{ color: B_rown }
+
+b_1 = 1.33 @{ color: "#c74440", hidden: true }
+
+q = 2.23 @{ color: "#aaaaaa", hidden: true }
+
+p = 2.14 @{ color: "#aaaaaa", hidden: true }
+
+a = 0 @{ color: "#c74440", hidden: true, slider: @{ min: -1.5, max: 1.5 } }
+
+b = 0.74 @{ color: "#2d70b3", hidden: true, slider: @{ max: 10 } }
+
+c = [-pi, -(3 / 4) * pi ... pi] @{ color: "#388c46", hidden: true }
+
+0.02 <=
+R_x(5 * x, 5 * y, 5 * z - q, a, b, c) ^ 2 +
+  R_y(5 * x, 5 * y, 5 * z - q, a, b, c) ^ 2 <=
+0.05 -
+  0.01 * sin(7 * R_z(5 * x, 5 * y, 5 * z - q, a, b, c)) *
+    {0 <= R_z(5 * x, 5 * y, 5 * z - q, a, b, c) <= 3} *
+    {0.1 <= R_x(5 * x, 5 * y, 5 * z - q, a, b, c) <= 1} @{ color: W_hite }
+
+a_9 = random(30) * 240 - 120 @{ color: "#c74440" }
+
+f(z) =
+  3 * ((-2 * z) / (1 + e ^ (-2 * -z))) +
+    t ^ 2 * (3 * ((-2 * z) / (1 + e ^ (-2 * -z))) - sqrt(1 - (z - 1) ^ 2)) @{
+  color: "#c74440",
+}
+
+b_9 = random(30) * 240 - 120 @{ color: "#2d70b3" }
+
+(
+  0.2 * ((f(v) * cos(u) + a_9) / 20),
+  0.2 * ((f(v) * sin(u) + b_9) / 20),
+  max(
+    0.2 *
+      ((v / (1.5 * t ^ (2 / 2.5)) + random() * 0.5 + 100 * (1.35 - t)) / 20),
+    l_im(0.2 * ((f(v) * cos(u) + a_9) / 20), 0.2 * ((f(v) * sin(u) + b_9) / 20))
+  )
+) @{
+  color: W_hite,
+  domain: @{ u: @{ min: 0, max: 2 * pi }, v: @{ min: 0, max: 5 } },
+}
+
+l_im(x, y) =
+  {
+    x ^ 2 + y ^ 2 <= 0.4: 0.15 * sqrt(x ^ 2 + y ^ 2) + 0.5,
+    (0.2 * cos(5 * x) * sin(5 * y)) / 5
+  } @{ color: "#2d70b3", hidden: true }
+
+5 * z = 0.2 * cos(5 * x) * sin(5 * y) @{ color: W_hite }
+
+0.01 <=
+R_x(5 * x, 5 * y, 5 * z - p, a, b_1, c) ^ 2 +
+  R_y(5 * x, 5 * y, 5 * z - p, a, b_1, c) ^ 2 <=
+0.05 -
+  0.01 * sin(7 * R_z(5 * x, 5 * y, 5 * z - p, a, b_1, c)) *
+    {0 <= R_z(5 * x, 5 * y, 5 * z - p, a, b_1, c) <= 3} *
+    {0.1 <= R_x(5 * x, 5 * y, 5 * z - p, a, b_1, c) <= 1} @{ color: W_hite }
