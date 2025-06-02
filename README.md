@@ -1,5 +1,5 @@
 # desmos-3d-graphs
-Some of my Desmos 3D Graphs. Maintained in DesModder Text Mode BETA format.
+Some of my Desmos Graphs. Maintained in DesModder Text Mode BETA format.
 
 ## Usage
 
